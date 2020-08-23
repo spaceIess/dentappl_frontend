@@ -41,6 +41,8 @@ set :yarn_target_path, -> { release_path }
 
 set :ssh_options, { forward_agent: true, user: fetch(:user) }
 set :pm2_app_name, "dentappl_frontend"
+set :pm2_start_params, ''
+set :pm2_app_command, ''   
 
 # namespace :deploy do
 #   task :yarn_deploy do
