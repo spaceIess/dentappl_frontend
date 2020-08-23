@@ -5,12 +5,12 @@ export default {
   ** Nuxt rendering mode
   ** See https://nuxtjs.org/api/configuration-mode
   */
-  mode: 'spa',
+  mode: 'universal',
   /*
   ** Nuxt target
   ** See https://nuxtjs.org/api/configuration-target
   */
-  target: 'static',
+  target: 'server',
   /*
   ** Headers of the page
   ** See https://nuxtjs.org/api/configuration-head
@@ -60,6 +60,10 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios'
   ],
+  server: {
+   port: 8000, // default: 3000
+   timing: false
+ },
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
