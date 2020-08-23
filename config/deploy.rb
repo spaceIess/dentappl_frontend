@@ -55,4 +55,4 @@ namespace :deploy do
 end
 
 after "deploy:publishing", :restart
-before "deploy:symlink:release", :yarn_deploy
+before "deploy:publishing", :yarn_deploy

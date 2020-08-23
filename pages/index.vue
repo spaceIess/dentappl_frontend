@@ -15,7 +15,7 @@
       </div>
       <v-card>
         <v-card-title class="headline">
-          Welcome to the Dentappl Admin!
+          Welcome to the Dentappl Admin!!!
         </v-card-title>
         <v-card-text>
           <p>
