@@ -21,7 +21,7 @@ set :deploy_to, "/home/#{fetch(:user)}/dentappl/#{fetch(:application)}"
 # append :linked_files, ".env"
 
 # Default value for linked_dirs is []
-append :linked_dirs, "node_modules", "dist"
+append :linked_dirs, "node_modules"
 
 set :nvm_type, :user
 set :nvm_node, "v14.4.0"
