@@ -46,10 +46,16 @@ namespace :deploy do
     on roles fetch(:yarn_roles) do
       within fetch(:yarn_target_path, :release_path) do
         execute fetch(:yarn_bin), 'build'
-        execute fetch(:yarn_bin), 'generate'
       end
     end
   end
+
+  desc 'Restart application'
+  task :restart do
+    invoke 'pm2:restart'
+  end
+
 end
 
+after :publishing, :restart
 before "deploy:symlink:release", :yarn_deploy
