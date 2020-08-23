@@ -40,22 +40,23 @@ set :yarn_target_path, -> { release_path }
 # set :keep_releases, 5
 
 set :ssh_options, { forward_agent: true, user: fetch(:user) }
+set :pm2_app_name, "dentappl_frontend"
 
-namespace :deploy do
-  task :yarn_deploy do
-    on roles fetch(:yarn_roles) do
-      within fetch(:yarn_target_path, :release_path) do
-        execute fetch(:yarn_bin), 'build'
-      end
-    end
-  end
-
-  desc 'Restart application'
-  task :restart do
-    invoke 'pm2:restart'
-  end
-
-end
-
-after :publishing, :restart
-before "deploy:symlink:release", :yarn_deploy
+# namespace :deploy do
+#   task :yarn_deploy do
+#     on roles fetch(:yarn_roles) do
+#       within fetch(:yarn_target_path, :release_path) do
+#         execute fetch(:yarn_bin), 'build'
+#       end
+#     end
+#   end
+#
+#   desc 'Restart application'
+#   task :restart do
+#     invoke 'pm2:restart'
+#   end
+#
+# end
+#
+# after "deploy:publishing", :restart
+# before "deploy:symlink:release", :yarn_deploy

@@ -18,6 +18,7 @@ install_plugin Capistrano::SCM::Git
 require "capistrano/nvm"
 require 'capistrano/nvm-install'
 require "capistrano/yarn"
+require 'capistrano/pm2'
 
 # Include tasks from other gems included in your Gemfile
 #
@@ -39,4 +40,4 @@ require "capistrano/yarn"
 # require "capistrano/passenger"
 
 # Load custom tasks from `lib/capistrano/tasks` if you have any defined
-Dir.glob("lib/capistrano/tasks/*.rake").each { |r| import r }
+# Dir.glob("lib/capistrano/tasks/*.cap").each { |r| import r }

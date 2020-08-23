@@ -8,4 +8,5 @@ group :development do
   gem 'capistrano-nvm', require: false
   gem 'capistrano-nvm-install', require: false
   gem 'capistrano-yarn'
+  gem 'capistrano-pm2'
 end
