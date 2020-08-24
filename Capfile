@@ -18,7 +18,7 @@ install_plugin Capistrano::SCM::Git
 require "capistrano/nvm"
 require 'capistrano/nvm-install'
 require "capistrano/yarn"
-require 'capistrano/pm2'
+# require 'capistrano/pm2'
 
 # Include tasks from other gems included in your Gemfile
 #

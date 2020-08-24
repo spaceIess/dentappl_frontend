@@ -52,7 +52,15 @@ namespace :deploy do
       end
     end
   end
+
+  task :restart do
+    on roles :all do
+     execute "pm2 delete dentappl_frontend || true"
+     execute "pm2 startOrReload #{current_path}/ecosystem.config.js --update-env"
+     execute "pm2 save"
+    end
+  end
 end
 
-after "deploy:publishing", :restart
+after "deploy:symlink:release", :restart
 before "deploy:publishing", :yarn_deploy
