@@ -55,7 +55,9 @@ namespace :deploy do
 
   task :restart do
     on roles :all do
-      execute "pm2 startOrReload #{current_path}/ecosystem.config.js --update-env"
+      within release_path do
+        execute "pm2 startOrReload ecosystem.config.js --update-env"
+      end
     end
   end
 end

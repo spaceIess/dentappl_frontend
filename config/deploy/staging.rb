@@ -8,7 +8,7 @@
 # server "db.example.com", user: "deploy", roles: %w{db}
 
 server '157.230.157.38', roles: [:web, :app], primary: true
-set :branch, :master
+set :branch, "auth"
 
 set :user, 'dentappl'
 
