@@ -69,14 +69,28 @@
       fixed
     >
       <v-list>
-        <v-list-item @click.native="right = !right">
+        <v-list-item @click.prevent="logOut">
+          <v-list-item-title v-if="this.$auth.$storage.state.user.id" >
+            <div>ID: {{this.$auth.$storage.state.user.id}}</div>
+            <div>Name: {{this.$auth.$storage.state.user.name}}</div>
+          </v-list-item-title>
+        </v-list-item>
+        <v-list-item @click.prevent="logOut">
+          <v-list-item-action>
+            <v-icon light>
+              mdi-repeat
+            </v-icon>
+          </v-list-item-action>
+          <v-list-item-title>Logout</v-list-item-title>
+        </v-list-item>
+        <!-- <v-list-item @click.native="right = !right">
           <v-list-item-action>
             <v-icon light>
               mdi-repeat
             </v-icon>
           </v-list-item-action>
           <v-list-item-title>Switch drawer (click me)</v-list-item-title>
-        </v-list-item>
+        </v-list-item> -->
       </v-list>
     </v-navigation-drawer>
     <v-footer
@@ -97,20 +111,41 @@ export default {
       fixed: false,
       items: [
         {
-          icon: 'mdi-apps',
-          title: 'Welcome',
-          to: '/'
+          icon: 'mdi-hospital-building',
+          title: 'Clinics',
+          to: '/clinics'
         },
         {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire'
+          icon: 'mdi-account-group',
+          title: 'Doctors',
+          to: '/doctors'
         }
       ],
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'Vuetify.js'
+      title: 'Dent'
+    }
+  },
+  mounted () {
+    this.tokenCheck()
+    this.tokenCheckID = setInterval(this.tokenCheck, 30 * 1000)
+  },
+  methods: {
+    logOut () {
+      clearInterval(this.tokenCheckID)
+      this.$auth.logout()
+      this.$router.push('/login')
+    },
+    async tokenCheck () {
+      try {
+        const response = await this.$axios.get('_api/me')
+        await this.$auth.setUser(response.data)
+      } catch ({ response }) {
+        if (response.status === 401) {
+          this.logOut()
+        }
+      }
     }
   }
 }

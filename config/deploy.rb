@@ -18,7 +18,7 @@ set :deploy_to, "/home/#{fetch(:user)}/dentappl/#{fetch(:application)}"
 # set :pty, true
 
 # Default value for :linked_files is []
-# append :linked_files, ".env"
+append :linked_files, ".env"
 
 # Default value for linked_dirs is []
 append :linked_dirs, "node_modules"
@@ -55,9 +55,7 @@ namespace :deploy do
 
   task :restart do
     on roles :all do
-     execute "pm2 delete dentappl_frontend || true"
-     execute "pm2 startOrReload #{current_path}/ecosystem.config.js --update-env"
-     execute "pm2 save"
+      execute "pm2 startOrReload #{current_path}/ecosystem.config.js --update-env"
     end
   end
 end

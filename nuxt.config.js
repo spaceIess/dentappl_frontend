@@ -1,20 +1,15 @@
 import colors from 'vuetify/es5/util/colors'
+import CONFIG from './config'
+console.log(CONFIG)
 
 export default {
-  /*
-  ** Nuxt rendering mode
-  ** See https://nuxtjs.org/api/configuration-mode
-  */
-  mode: 'universal',
-  /*
-  ** Nuxt target
-  ** See https://nuxtjs.org/api/configuration-target
-  */
+  publicRuntimeConfig: {
+    baseURL: 'https://nuxtjs.org'
+  },
+  privateRuntimeConfig: {
+    apiSecret: 2
+  },
   target: 'server',
-  /*
-  ** Headers of the page
-  ** See https://nuxtjs.org/api/configuration-head
-  */
   head: {
     titleTemplate: '%s - ' + process.env.npm_package_name,
     title: process.env.npm_package_name || '',
@@ -27,52 +22,40 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
-  /*
-  ** Global CSS
-  */
   css: [
   ],
-  /*
-  ** Plugins to load before mounting the App
-  ** https://nuxtjs.org/guide/plugins
-  */
   plugins: [
   ],
-  /*
-  ** Auto import components
-  ** See https://nuxtjs.org/api/configuration-components
-  */
   components: true,
-  /*
-  ** Nuxt.js dev-modules
-  */
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/eslint-module',
     // Doc: https://github.com/nuxt-community/stylelint-module
     '@nuxtjs/stylelint-module',
-    '@nuxtjs/vuetify'
+    '@nuxtjs/vuetify',
+    '@nuxtjs/dotenv'
   ],
-  /*
-  ** Nuxt.js modules
-  */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/auth'
   ],
   server: {
-   port: 8000, // default: 3000
-   timing: false
- },
-  /*
-  ** Axios module configuration
-  ** See https://axios.nuxtjs.org/options
-  */
-  axios: {},
-  /*
-  ** vuetify module configuration
-  ** https://github.com/nuxt-community/vuetify-module
-  */
+    port: 8000, // default: 3000
+    timing: false
+  },
+  axios: {
+    baseURL: CONFIG.baseUrl,
+    credentials: true,
+    proxy: true
+  },
+  proxy: {
+    '/api/': { target: `${CONFIG.baseUrl}/api/v2`, pathRewrite: { '^/api/': '' } },
+    '/_api/': { target: `${CONFIG.baseUrl}/api/v1`, pathRewrite: { '^/_api/': '' } }
+  },
+  router: {
+    middleware: ['authentication']
+  },
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {
@@ -90,10 +73,27 @@ export default {
       }
     }
   },
-  /*
-  ** Build configuration
-  ** See https://nuxtjs.org/api/configuration-build/
-  */
   build: {
+
+  },
+  auth: {
+    redirect: {
+      login: '/login',
+      logout: '/',
+      callback: '/login',
+      home: false
+    },
+    strategies: {
+      local: {
+        tokenType: false,
+        autoFetchUser: false,
+        endpoints: {
+          login: { url: '/api/sessions', method: 'post', propertyName: 'payload.session.token' },
+          logout: { url: '/api/auth/logout', method: 'post' },
+          // user: { url: '/_api/me', method: 'get', propertyName: false }
+          user: false
+        }
+      }
+    }
   }
 }
