@@ -48,7 +48,7 @@ export default {
   },
   methods: {
     fetchData () {
-      this.$axios.get('api/clinics')
+      this.$axios.get('api/v2/clinics')
         .then(({ data }) => {
           this.clinics = data.payload.clinics
           this.loading = false

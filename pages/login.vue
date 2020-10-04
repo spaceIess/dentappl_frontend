@@ -161,7 +161,7 @@ export default {
       await this.catchError(this.login)
     },
     async sendCode () {
-      await this.$axios.$post('/api/sessions/send_code', {
+      await this.$axios.$post('/api/v2/sessions/send_code', {
         phone: this.phone,
         app_token: CONFIG.appToken
       })

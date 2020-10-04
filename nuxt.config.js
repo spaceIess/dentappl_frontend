@@ -49,8 +49,8 @@ export default {
     proxy: true
   },
   proxy: {
-    '/api/': { target: `${CONFIG.baseUrl}/api/v2`, pathRewrite: { '^/api/': '' } },
-    '/_api/': { target: `${CONFIG.baseUrl}/api/v1`, pathRewrite: { '^/_api/': '' } }
+    '/api/v2/': { target: `${CONFIG.baseUrl}` },
+    '/api/v1/': { target: `${CONFIG.baseUrl}` }
   },
   router: {
     middleware: ['authentication']
@@ -87,9 +87,8 @@ export default {
         tokenType: false,
         autoFetchUser: false,
         endpoints: {
-          login: { url: '/api/sessions', method: 'post', propertyName: 'payload.session.token' },
-          logout: { url: '/api/auth/logout', method: 'post' },
-          // user: { url: '/_api/me', method: 'get', propertyName: false }
+          login: { url: '/api/v2/sessions', method: 'post', propertyName: 'payload.session.token' },
+          logout: { url: '/api/v2/sessions/logout', method: 'post' },
           user: false
         }
       }

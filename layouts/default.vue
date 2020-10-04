@@ -139,7 +139,7 @@ export default {
     },
     async tokenCheck () {
       try {
-        const response = await this.$axios.get('_api/me')
+        const response = await this.$axios.get('api/v1/me')
         await this.$auth.setUser(response.data)
       } catch ({ response }) {
         if (response.status === 401) {
